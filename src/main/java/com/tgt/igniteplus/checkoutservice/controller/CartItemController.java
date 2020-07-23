@@ -1,8 +1,11 @@
 package com.tgt.igniteplus.checkoutservice.controller;
 
 import com.tgt.igniteplus.checkoutservice.model.CartItem;
+import com.tgt.igniteplus.checkoutservice.model.CartResponse;
 import com.tgt.igniteplus.checkoutservice.service.CartItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -21,8 +24,15 @@ public class CartItemController {
 
     //get an item by item id
     @GetMapping("/cartItem/{cartId}")
-    public List<CartItem> getByCartId(@PathVariable("cartId") String cartId){
-        return cartItemService.getItemsByCartId(cartId);
+    public ResponseEntity getByCartId(@PathVariable("cartId") String cartId){
+        List<CartItem> cartItems=cartItemService.getItemsByCartId(cartId);
+        CartResponse cartResponse=new CartResponse();
+        for(CartItem item: cartItems){
+            cartResponse.setTotal_price(cartResponse.getTotal_price() + (item.getItemQuantity() * item.getItemPrice()));
+            cartResponse.setTotal_quantity(cartResponse.getTotal_quantity() + item.getItemQuantity());
+        };
+        cartResponse.setCartItems(cartItems);
+        return new ResponseEntity<CartResponse>(cartResponse, HttpStatus.OK);
     }
 
     //create Group-cart
@@ -39,7 +49,7 @@ public class CartItemController {
         return cartItemService.getItemByCartIdItemIdSize(cartId,itemId,itemSize);
     }
 
-    //to delete an item of particular quantity , itemSize with the help of itemId and cartId
+    //to update an item of particular quantity , itemSize with the help of itemId and cartId
     @PutMapping("/cartItem/{cartId}/{itemId}/{itemSize}/{itemQuantity}")
     public CartItem getItemByCartIdItemIdSize(@PathVariable("cartId") String cartId,
                                               @PathVariable("itemId") String itemId,
