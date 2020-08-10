@@ -22,7 +22,7 @@ public class CartItemController {
         return cartItemService.getAll();
     }
 
-    //get an item by item id
+    //get an cartItems by cartId
     @GetMapping("/cartItem/{cartId}")
     public ResponseEntity getByCartId(@PathVariable("cartId") String cartId){
         List<CartItem> cartItems=cartItemService.getItemsByCartId(cartId);
@@ -35,7 +35,7 @@ public class CartItemController {
         return new ResponseEntity<CartResponse>(cartResponse, HttpStatus.OK);
     }
 
-    //create Group-cart
+    //create cartItem
     @PostMapping("/cartItem")
     public CartItem createCartItem(@RequestBody CartItem cartItem){
         return cartItemService.create(cartItem);
@@ -64,5 +64,11 @@ public class CartItemController {
                                               @PathVariable("itemId") String itemId,
                                               @PathVariable("itemSize") String itemSize) {
         return cartItemService.deleteItemByCartIdItemIdSize(cartId, itemId, itemSize);
+    }
+
+    //to delete all cartItems of a cartId
+    @DeleteMapping("/cartItem/{cartId}")
+    public List<CartItem> deleteItemsByCartId(@PathVariable("cartId") String cartId){
+        return cartItemService.deleteItemsByCartId(cartId);
     }
 }

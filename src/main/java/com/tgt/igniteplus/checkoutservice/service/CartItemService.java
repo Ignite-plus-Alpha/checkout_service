@@ -51,20 +51,20 @@ public class CartItemService {
     public CartItem updateItemByCartIdItemIdSize(String cartId,String itemId,
                                                  Integer itemQuantity,String itemSize){
         List<CartItem>  items = cartItemDAO.findByCartId(cartId);
-        CartItem filteredItem = null;
+        CartItem updatedItem = null;
         for (CartItem item:items) {
             if(item.getItemId().equals(itemId) && item.getItemSize().equals(itemSize))
             {
-                filteredItem = item;
-                filteredItem.setItemQuantity(itemQuantity);
-                cartItemDAO.save(filteredItem);
+                updatedItem = item;
+                updatedItem.setItemQuantity(itemQuantity);
+                cartItemDAO.save(updatedItem);
                 break;
             }
         }
-        return filteredItem;
+        return updatedItem;
     }
 
-    //delete an item of partcular size using the itemId and itemSize of particular cartId
+    //delete an item of particular size using the itemId and itemSize of particular cartId
     public CartItem deleteItemByCartIdItemIdSize(String cartId,String itemId,String itemSize){
         List<CartItem>  items = cartItemDAO.findByCartId(cartId);
         CartItem filteredItem = null;
@@ -77,6 +77,19 @@ public class CartItemService {
             }
         }
         return filteredItem;
+    }
+
+    //delete all items belonging to a cartId
+    public List<CartItem> deleteItemsByCartId(String cartId){
+        List<CartItem> cartItems = getAll();
+        List<CartItem> deletedItems = null;
+        for(CartItem item:cartItems){
+            if(item.getCartId().equals(cartId)){
+                deletedItems.add(item);
+                cartItemDAO.delete(item);
+            }
+        }
+        return deletedItems;
     }
 }
 
