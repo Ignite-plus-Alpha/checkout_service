@@ -5,7 +5,6 @@ import com.tgt.igniteplus.checkoutservice.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
-import java.util.Optional;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -14,26 +13,37 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-//    @GetMapping("/hello")
-//    public String hello() { return "hello World";}
+    @GetMapping("/hello")
+    public String hello() { return "hello World";}
 
-    //getAllCartItem
+    //getAllCartDetails
     @GetMapping("/cart")
     public List<Cart> getAll(){
         return cartService.getAll();
     }
 
-    //get an item by item id
+    //get the cartId by user id
     @GetMapping("/cart/{userId}")
-    public Optional<Cart> getByUserId(@PathVariable("userId") String userId){
-        return cartService.getByUserId(userId);
+    public String getCartIdByUserId(@PathVariable("userId") String userId){
+        return cartService.getCartIdByUserId(userId);
     }
 
-    //createGroup-cart
-    @PostMapping("/cart")
-    public String createCartId(@RequestBody Cart cart){
-        String message =cartService.createCartId(cart);
+    //get all orderIds by user id
+    @GetMapping("/cart/orders/{userId}")
+    public List<String> getOrderIdsByUserId(@PathVariable("userId") String userId){
+        return cartService.getOrderIdsByUserId(userId);
+    }
+
+    //update orderId of an user
+    @PutMapping("/cart/{userId}/{orderId}")
+    public String updateOrderIdByUserId(@PathVariable("userId") String userId,@PathVariable("orderId") String orderId){
+        return cartService.updateOrderIdByUserId(userId, orderId);
+    }
+
+    //create a cartId for an user if already does not exist.
+    @PostMapping("/cart/{userId}")
+    public String createCartId(@PathVariable String userId){
+        String message =cartService.createCartId(userId);
         return message;
     }
-
 }

@@ -5,6 +5,7 @@ import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -19,37 +20,11 @@ public class Cart {
     //pass cartId to CartItem to view items in that cart
 
     @PrimaryKey
-    @Column("userid")
+    @Column("user_id")
     private String userId;
-    @Column("cartid")
+    @Column("cart_id")
     private String cartId= UUID.randomUUID().toString();
+    @Column("order_ids")
+    private List<String> orderIds;
 
-    public Cart( String userId,String cartId) {
-        this.userId = userId;
-        this.cartId = cartId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getCartId() {
-        return cartId;
-    }
-
-    public void setCartId(String cartId) {
-        this.cartId = cartId;
-    }
-
-    @Override
-    public String toString() {
-        return "Cart{" +
-                "userId=" + userId +
-                ", cartId='" + cartId + '\'' +
-                '}';
-    }
 }
