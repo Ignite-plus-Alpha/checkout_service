@@ -13,9 +13,6 @@ public class CartController {
     @Autowired
     private CartService cartService;
 
-    @GetMapping("/hello")
-    public String hello() { return "hello World";}
-
     //getAllCartDetails
     @GetMapping("/cart")
     public List<Cart> getAll(){

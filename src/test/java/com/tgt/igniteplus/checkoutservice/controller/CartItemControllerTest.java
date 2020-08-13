@@ -9,10 +9,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import java.util.List;
@@ -62,26 +66,12 @@ public class CartItemControllerTest {
                 .andExpect(status().isOk());
     }
 
-  //  @Test
-//    public void getByCartId() throws Exception {
-////        CartItem cartItem= new CartItem();
-////        String cartId="8bffcb0d-e44e-4331-9911-7f3a5be08f0a";
-////        cartItem.setItemId("601a393c-18b7-4a08-b2cc-064b8d4039cc");
-////        cartItem.setItemSize("na");
-////        cartItem.setItemTitle("potatoes");
-////        cartItem.setItemGroup("grocery");
-////        cartItem.setItemCategory("vegetables");
-////        cartItem.setItemImageURL(" https://images.unsplash.com/photo-1518977676601-b53f82aba655?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2550&q=80");
-////        cartItem.setItemQuantity(1);
-////        cartItem.setItemPrice((float)32);
-//
-//        ResponseEntity<CartResponse> allCart=new ResponseEntity<CartResponse>();
-//        CartResponse cartResponse=new CartResponse();
-//        given(cartItemController.getByCartId(cartId)).willReturn(allCart);
-//        mockMvc.perform(get("/cartItem")
-//                .contentType(APPLICATION_JSON))
-//                .andExpect(status().isOk());
-//    }
+    @Test
+    public void getByCartId() throws Exception {
+        Mockito.when( cartItemService.getItemsByCartId(Mockito.anyString())).thenReturn(null);
+        RequestBuilder requestBuilder=MockMvcRequestBuilders.get("/cartItem/{cartId}","4d6b92ac-13fc-4eb4-abac-0b90af0ca64a");
+        mockMvc.perform(requestBuilder).andExpect(MockMvcResultMatchers.status().isOk());
+    }
 
     @Test
     public void createCartItem() throws Exception{

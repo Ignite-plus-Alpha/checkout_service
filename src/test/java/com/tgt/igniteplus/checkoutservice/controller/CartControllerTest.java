@@ -1,17 +1,13 @@
 package com.tgt.igniteplus.checkoutservice.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.tgt.igniteplus.checkoutservice.dao.CartDAO;
 import com.tgt.igniteplus.checkoutservice.model.Cart;
-import com.tgt.igniteplus.checkoutservice.service.CartService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static java.util.Collections.singletonList;
@@ -28,23 +24,11 @@ public class CartControllerTest {
     private MockMvc mockMvc;
 
     @Mock
-    private CartService cartService;
-
-    @Mock
-    private CartDAO cartDAO;
-
-    @Mock
     private CartController cartController ;
 
     @Before
     public void setUp() {
         mockMvc = MockMvcBuilders.standaloneSetup(cartController).build();
-    }
-
-    @Test
-    public void hello() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/hello")).andExpect(MockMvcResultMatchers.status().isOk());
-        //mockMvc.perform(MockMvcRequestBuilders.get("/hello")).andExpect(MockMvcResultMatchers.status().isBadGateway());
     }
 
     @Test
