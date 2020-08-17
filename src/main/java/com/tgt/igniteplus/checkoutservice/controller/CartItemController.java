@@ -22,7 +22,7 @@ public class CartItemController {
         return cartItemService.getAll();
     }
 
-    //get an item by item id
+    //get an cartItems by cartId
     @GetMapping("/cartItem/{cartId}")
     public ResponseEntity getByCartId(@PathVariable("cartId") String cartId){
         List<CartItem> cartItems=cartItemService.getItemsByCartId(cartId);
@@ -35,7 +35,7 @@ public class CartItemController {
         return new ResponseEntity<CartResponse>(cartResponse, HttpStatus.OK);
     }
 
-    //create Group-cart
+    //create cartItem
     @PostMapping("/cartItem")
     public CartItem createCartItem(@RequestBody CartItem cartItem){
         return cartItemService.create(cartItem);
@@ -51,7 +51,7 @@ public class CartItemController {
 
     //to update an item of particular quantity , itemSize with the help of itemId and cartId
     @PutMapping("/cartItem/{cartId}/{itemId}/{itemSize}/{itemQuantity}")
-    public CartItem getItemByCartIdItemIdSize(@PathVariable("cartId") String cartId,
+    public CartItem updateItemByCartIdItemIdSize(@PathVariable("cartId") String cartId,
                                               @PathVariable("itemId") String itemId,
                                               @PathVariable("itemQuantity") Integer itemQuantity,
                                               @PathVariable("itemSize") String itemSize){
@@ -61,8 +61,14 @@ public class CartItemController {
     //to delete an item of particular itemSize based on cartId and itemId
     @DeleteMapping ("/cartItem/{cartId}/{itemId}/{itemSize}")
     public CartItem deleteByCartIdItemIdItemSize(@PathVariable("cartId") String cartId,
-                                              @PathVariable("itemId") String itemId,
-                                              @PathVariable("itemSize") String itemSize) {
+                                                 @PathVariable("itemId") String itemId,
+                                                 @PathVariable("itemSize") String itemSize) {
         return cartItemService.deleteItemByCartIdItemIdSize(cartId, itemId, itemSize);
+    }
+
+    //to delete all cartItems of a cartId
+    @DeleteMapping("/cartItem/{cartId}")
+    public List<CartItem> deleteItemsByCartId(@PathVariable("cartId") String cartId){
+        return cartItemService.deleteItemsByCartId(cartId);
     }
 }
