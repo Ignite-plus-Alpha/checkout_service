@@ -5,6 +5,7 @@ import com.tgt.igniteplus.checkoutservice.model.CartItem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -81,13 +82,13 @@ public class CartItemService {
 
     //delete all items belonging to a cartId
     public List<CartItem> deleteItemsByCartId(String cartId){
-        List<CartItem> cartItems = getAll();
-        List<CartItem> deletedItems = null;
+        List<CartItem> cartItems = getItemsByCartId(cartId);
+        List<CartItem> deletedItems = new ArrayList<>();
         for(CartItem item:cartItems){
-            if(item.getCartId().equals(cartId)){
+
                 deletedItems.add(item);
                 cartItemDAO.delete(item);
-            }
+
         }
         return deletedItems;
     }
