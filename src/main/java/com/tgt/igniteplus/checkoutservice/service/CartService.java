@@ -40,9 +40,12 @@ public class CartService {
         Boolean hasCart = hasCart(userId);
         if(!hasCart) {
             cart = createCart(cart);
-            return "Created cartId "+cart.getCartId()+" for the User";
+            return cart.getCartId();
         }
-        return "User already has cartId";
+        cart.setUserId(userId);
+        cart.setCartId(getCartIdByUserId(userId));
+        cart.setOrderIds(getOrderIdsByUserId(userId));
+        return cart.getCartId();
     }
 
     //createCart
