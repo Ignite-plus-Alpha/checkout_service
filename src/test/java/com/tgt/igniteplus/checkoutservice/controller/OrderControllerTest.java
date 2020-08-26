@@ -41,23 +41,6 @@ public class OrderControllerTest {
     }
 
     @Test
-    public void getAll() throws Exception {
-        Order order=new Order();
-        order.setOrderId("787a393c-18b7-4a08-b2cc-064b7a3039bb");
-        order.setOrderItems("potatoes");
-        order.setOrderPrice((float)32);
-        order.setOrderQuantity(1);
-        order.setDeliveryAddress("#57,3rd cross,1st stage,Hebbal-kempapura,Bangalore");
-        order.setOrderStatus("shipped");
-
-        List<Order> allOrder=singletonList(order);
-        given(orderController.getAll()).willReturn(allOrder);
-        mockMvc.perform(get("/order")
-                .contentType(APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
-
-    @Test
     public void getByOrderId() throws Exception {
         Order order=new Order();
         order.setOrderId("787a393c-18b7-4a08-b2cc-064b7a3039bb");

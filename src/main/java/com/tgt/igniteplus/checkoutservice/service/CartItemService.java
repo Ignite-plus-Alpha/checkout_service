@@ -18,23 +18,19 @@ public class CartItemService {
         this.cartItemDAO = cartItemDAO;
     }
 
-    //getAllItemCartItem
     public static List<CartItem> getAll(){
         return cartItemDAO.findAll();
     }
 
-    //createCartItem
     public CartItem create(CartItem cartItem){
         return cartItemDAO.save(cartItem);
     }
 
-    //get Item list for a cartId
     public List<CartItem> getItemsByCartId(String cartId) {
         List<CartItem>  items = cartItemDAO.findByCartId(cartId);
         return items;
     }
 
-    //get Item of particular cartId itemId and size
     public CartItem getItemByCartIdItemIdSize(String cartId,String itemId,String itemSize){
         List<CartItem>  items = cartItemDAO.findByCartId(cartId);
         CartItem filteredItem = null;
@@ -48,7 +44,6 @@ public class CartItemService {
         return filteredItem;
     }
 
-    //update quantity of an item of particular cartId of particular size
     public CartItem updateItemByCartIdItemIdSize(String cartId,String itemId,
                                                  Integer itemQuantity,String itemSize){
         List<CartItem>  items = cartItemDAO.findByCartId(cartId);

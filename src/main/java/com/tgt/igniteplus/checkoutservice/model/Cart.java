@@ -4,21 +4,16 @@ import lombok.*;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
-
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.UUID;
 
-@Getter
-@Setter
 @Data
 @NoArgsConstructor
 @Table("cart")
 public class Cart {
 
-    //table -  each row is a cart
-    //cartId is created only if user does not have cartId
-    //pass cartId to CartItem to view items in that cart
-
+    @NotEmpty
     @PrimaryKey
     @Column("user_id")
     private String userId;

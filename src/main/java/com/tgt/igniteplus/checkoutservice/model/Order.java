@@ -4,17 +4,16 @@ import lombok.*;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
-
+import javax.validation.constraints.NotEmpty;
 import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Table("order_details")
 public class Order {
 
+    @NotEmpty
     @PrimaryKey("order_id")
     private String orderId= UUID.randomUUID().toString();
     @Column("order_items")

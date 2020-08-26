@@ -16,13 +16,6 @@ public class CartItemController {
     @Autowired
     private CartItemService cartItemService;
 
-    //get all Cart Items
-    @GetMapping("/cartItem")
-    public List<CartItem> getAll(){
-        return cartItemService.getAll();
-    }
-
-    //get an cartItems by cartId
     @GetMapping("/cartItem/{cartId}")
     public ResponseEntity getByCartId(@PathVariable("cartId") String cartId){
         List<CartItem> cartItems=cartItemService.getItemsByCartId(cartId);
@@ -35,13 +28,11 @@ public class CartItemController {
         return new ResponseEntity<CartResponse>(cartResponse, HttpStatus.OK);
     }
 
-    //create cartItem
     @PostMapping("/cartItem")
     public CartItem createCartItem(@RequestBody CartItem cartItem){
         return cartItemService.create(cartItem);
     }
 
-    //to get a particular item from cart using itemId and itemSize
     @GetMapping("/cartItem/{cartId}/{itemId}/{itemSize}")
     public CartItem getByCartIdItemIdItemSize(@PathVariable("cartId") String cartId,
                                               @PathVariable("itemId") String itemId,

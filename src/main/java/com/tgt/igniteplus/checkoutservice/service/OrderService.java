@@ -17,27 +17,22 @@ public class OrderService {
         this.orderDAO = orderDAO;
     }
 
-    //getAllOrders
     public static List<Order> getAll(){
         return orderDAO.findAll();
     }
 
-    //createOrder
     public Order createOrder(Order order){
         return orderDAO.save(order);
     }
 
-    //get Details for an orderId
     public Order getByOrderId(String orderId) {
         Optional<Order> order=orderDAO.findById(orderId);
         if(!order.isPresent()) {
             return null;
         }
-        Order order1=order.get();
-        return order1;
+        return order.get();
     }
 
-    //update Status of an order using order id
     public Order updateStatusByOrderId(String orderId,String status){
         List<Order> orders=getAll();
         Order updatedOrder=null;

@@ -47,26 +47,6 @@ public class CartItemControllerTest {
     }
 
     @Test
-    public void getAll() throws Exception {
-        CartItem cartItem= new CartItem();
-        cartItem.setCartId("8bffcb0d-e44e-4331-9911-7f3a5be08f0a");
-        cartItem.setItemId("601a393c-18b7-4a08-b2cc-064b8d4039cc");
-        cartItem.setItemSize("na");
-        cartItem.setItemTitle("potatoes");
-        cartItem.setItemGroup("grocery");
-        cartItem.setItemCategory("vegetables");
-        cartItem.setItemImageURL(" https://images.unsplash.com/photo-1518977676601-b53f82aba655?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2550&q=80");
-        cartItem.setItemQuantity(1);
-        cartItem.setItemPrice((float)32);
-
-        List<CartItem> allCart=singletonList(cartItem);
-        given(cartItemController.getAll()).willReturn(allCart);
-        mockMvc.perform(get("/cartItem")
-                .contentType(APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
-
-    @Test
     public void getByCartId() throws Exception {
         Mockito.when( cartItemService.getItemsByCartId(Mockito.anyString())).thenReturn(null);
         RequestBuilder requestBuilder=MockMvcRequestBuilders.get("/cartItem/{cartId}","4d6b92ac-13fc-4eb4-abac-0b90af0ca64a");
