@@ -1,8 +1,6 @@
 package com.tgt.igniteplus.checkoutservice.controller;
 
-import com.tgt.igniteplus.checkoutservice.model.Cart;
 import com.tgt.igniteplus.checkoutservice.service.CartService;
-import org.apache.tinkerpop.shaded.kryo.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;

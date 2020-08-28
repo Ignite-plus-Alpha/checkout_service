@@ -60,7 +60,6 @@ public class CartItemService {
         return updatedItem;
     }
 
-    //delete an item of particular size using the itemId and itemSize of particular cartId
     public CartItem deleteItemByCartIdItemIdSize(String cartId,String itemId,String itemSize){
         List<CartItem>  items = cartItemDAO.findByCartId(cartId);
         CartItem filteredItem = null;
@@ -75,7 +74,6 @@ public class CartItemService {
         return filteredItem;
     }
 
-    //delete all items belonging to a cartId
     public List<CartItem> deleteItemsByCartId(String cartId){
         List<CartItem> cartItems = getItemsByCartId(cartId);
         List<CartItem> deletedItems = new ArrayList<>();
