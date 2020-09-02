@@ -17,12 +17,10 @@ public class CartService {
         this.cartDAO = cartDAO;
     }
 
-    //getAllCartIds
     public List<Cart> getAll(){
         return cartDAO.findAll();
     }
 
-    //get row of cart
     public Cart getByUserId(String userId){
         Optional<Cart> cart = cartDAO.findById(userId);
         Cart rowCart=cart.get();
@@ -32,26 +30,24 @@ public class CartService {
         return rowCart;
     }
 
-    //check if cartId is present for an user,
-    //if the user does not have cartId create
     public String createCartId(String userId){
         Cart cart = new Cart();
         cart.setUserId(userId);
         Boolean hasCart = hasCart(userId);
         if(!hasCart) {
             cart = createCart(cart);
-            return "Created cartId "+cart.getCartId()+" for the User";
+            return cart.getCartId();
         }
-        return "User already has cartId";
+        cart.setUserId(userId);
+        cart.setCartId(getCartIdByUserId(userId));
+        cart.setOrderIds(getOrderIdsByUserId(userId));
+        return cart.getCartId();
     }
 
-    //createCart
     public Cart createCart(Cart cart){
         return cartDAO.save(cart);
     }
 
-    //check if an user has cartId
-    //return true if user has else false
     public Boolean hasCart(String userId){
         Optional<Cart> cart=cartDAO.findById(userId);
         if(!cart.isPresent()) {
@@ -60,7 +56,6 @@ public class CartService {
         return true;
     }
 
-    //getCartIdByUserId
     public String getCartIdByUserId(String userId) {
         Cart cart=getByUserId(userId);
         if(cart==null)
@@ -68,7 +63,6 @@ public class CartService {
         return cart.getCartId();
     }
 
-    //get orderIds of an user
     public List<String> getOrderIdsByUserId(String userId) {
         Cart cart=getByUserId(userId);
         if(cart==null)
@@ -76,7 +70,6 @@ public class CartService {
         return cart.getOrderIds();
     }
 
-    //to update orderIds of an user
     public String updateOrderIdByUserId(String userId,String orderId){
         Optional<Cart> cart=cartDAO.findById(userId);
         if(!cart.isPresent()) {

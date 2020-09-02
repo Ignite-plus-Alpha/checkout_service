@@ -18,25 +18,16 @@ public class OrderController {
     @Autowired
     private CartService cartService;
 
-    //getAllOrderItem
-    @GetMapping("/order")
-    public List<Order> getAll(){
-        return orderService.getAll();
-    }
-
-    //get an details by order id
     @GetMapping("/order/{orderId}")
     public Order getByOrderId(@PathVariable("orderId") String orderId){
         return orderService.getByOrderId(orderId);
     }
 
-    //update status of an order by order id
     @PutMapping("/order/{orderId}/{status}")
     public Order updateStatusByOrderId(@PathVariable("orderId") String orderId,@PathVariable("status") String status){
         return orderService.updateStatusByOrderId(orderId,status);
     }
 
-    //to get details of all orders of an user
     @GetMapping("/orders/{userId}")
     public List<Order> getOrdersByUserId(@PathVariable("userId") String userId){
         List<String> orderIds = cartService.getOrderIdsByUserId(userId);
@@ -47,10 +38,8 @@ public class OrderController {
         return orders;
     }
 
-    //createOrder
     @PostMapping("/order")
     public Order createOrderId(@RequestBody Order order){
         return orderService.createOrder(order);
     }
-
 }

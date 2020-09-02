@@ -5,19 +5,22 @@ import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
+import javax.validation.constraints.NotEmpty;
+
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Table("cart_item")
 public class CartItem {
 
+    @NotEmpty
     @PrimaryKeyColumn(name = "cart_id",ordinal = 0,type = PrimaryKeyType.PARTITIONED)
     private String cartId;
+    @NotEmpty
     @PrimaryKeyColumn(name = "item_id",ordinal = 0,type = PrimaryKeyType.CLUSTERED)
     private String itemId;
+    @NotEmpty
     @PrimaryKeyColumn(name = "item_size",ordinal = 1,type = PrimaryKeyType.CLUSTERED)
     private String itemSize;
     @Column("item_title")

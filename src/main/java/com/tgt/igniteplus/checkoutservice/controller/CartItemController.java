@@ -16,13 +16,6 @@ public class CartItemController {
     @Autowired
     private CartItemService cartItemService;
 
-    //get all Cart Items
-    @GetMapping("/cartItem")
-    public List<CartItem> getAll(){
-        return cartItemService.getAll();
-    }
-
-    //get an cartItems by cartId
     @GetMapping("/cartItem/{cartId}")
     public ResponseEntity getByCartId(@PathVariable("cartId") String cartId){
         List<CartItem> cartItems=cartItemService.getItemsByCartId(cartId);
@@ -35,13 +28,11 @@ public class CartItemController {
         return new ResponseEntity<CartResponse>(cartResponse, HttpStatus.OK);
     }
 
-    //create cartItem
     @PostMapping("/cartItem")
     public CartItem createCartItem(@RequestBody CartItem cartItem){
         return cartItemService.create(cartItem);
     }
 
-    //to get a particular item from cart using itemId and itemSize
     @GetMapping("/cartItem/{cartId}/{itemId}/{itemSize}")
     public CartItem getByCartIdItemIdItemSize(@PathVariable("cartId") String cartId,
                                               @PathVariable("itemId") String itemId,
@@ -49,7 +40,6 @@ public class CartItemController {
         return cartItemService.getItemByCartIdItemIdSize(cartId,itemId,itemSize);
     }
 
-    //to update an item of particular quantity , itemSize with the help of itemId and cartId
     @PutMapping("/cartItem/{cartId}/{itemId}/{itemSize}/{itemQuantity}")
     public CartItem updateItemByCartIdItemIdSize(@PathVariable("cartId") String cartId,
                                               @PathVariable("itemId") String itemId,
@@ -58,7 +48,6 @@ public class CartItemController {
         return cartItemService.updateItemByCartIdItemIdSize(cartId,itemId,itemQuantity,itemSize);
     }
 
-    //to delete an item of particular itemSize based on cartId and itemId
     @DeleteMapping ("/cartItem/{cartId}/{itemId}/{itemSize}")
     public CartItem deleteByCartIdItemIdItemSize(@PathVariable("cartId") String cartId,
                                                  @PathVariable("itemId") String itemId,
@@ -66,7 +55,6 @@ public class CartItemController {
         return cartItemService.deleteItemByCartIdItemIdSize(cartId, itemId, itemSize);
     }
 
-    //to delete all cartItems of a cartId
     @DeleteMapping("/cartItem/{cartId}")
     public List<CartItem> deleteItemsByCartId(@PathVariable("cartId") String cartId){
         return cartItemService.deleteItemsByCartId(cartId);
