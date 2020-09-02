@@ -36,6 +36,8 @@ public class CartControllerTest {
         Cart cart=new Cart();
         cart.setUserId("8922b8a0-cf4c-43fa-abca-fd55c78e7d10");
         cart.setCartId("8bffcb0d-e44e-4331-9911-7f3a5be08f0a");
+//        cart.setUserId("");
+//        cart.setCartId("");
         cart.setOrderIds(null);
         given(cartController.getCartIdByUserId(cart.getUserId())).willReturn(cart.getCartId());
         mockMvc.perform(get("/cart/8922b8a0-cf4c-43fa-abca-fd55c78e7d10")
