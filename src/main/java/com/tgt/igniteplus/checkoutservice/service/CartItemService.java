@@ -1,7 +1,9 @@
 package com.tgt.igniteplus.checkoutservice.service;
 
 import com.tgt.igniteplus.checkoutservice.dao.CartItemDAO;
+import com.tgt.igniteplus.checkoutservice.exception.CartItemNotFoundException;
 import com.tgt.igniteplus.checkoutservice.model.CartItem;
+import com.tgt.igniteplus.checkoutservice.model.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,17 +20,13 @@ public class CartItemService {
         this.cartItemDAO = cartItemDAO;
     }
 
-    public static List<CartItem> getAll(){
-        return cartItemDAO.findAll();
-    }
-
     public CartItem create(CartItem cartItem){
         return cartItemDAO.save(cartItem);
     }
 
-    public List<CartItem> getItemsByCartId(String cartId) {
-        List<CartItem>  items = cartItemDAO.findByCartId(cartId);
-        return items;
+    public List<CartItem> getItemsByCartId(String cartId) throws CartItemNotFoundException {
+        return  cartItemDAO.findByCartId(cartId);
+
     }
 
     public CartItem getItemByCartIdItemIdSize(String cartId,String itemId,String itemSize){
@@ -74,14 +72,13 @@ public class CartItemService {
         return filteredItem;
     }
 
-    public List<CartItem> deleteItemsByCartId(String cartId){
+
+    public List<CartItem> deleteItemsByCartId(String cartId) throws CartItemNotFoundException {
         List<CartItem> cartItems = getItemsByCartId(cartId);
         List<CartItem> deletedItems = new ArrayList<>();
         for(CartItem item:cartItems){
-
-                deletedItems.add(item);
-                cartItemDAO.delete(item);
-
+            deletedItems.add(item);
+            cartItemDAO.delete(item);
         }
         return deletedItems;
     }

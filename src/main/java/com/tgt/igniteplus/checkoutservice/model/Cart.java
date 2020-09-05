@@ -18,7 +18,7 @@ public class Cart {
     @Column("user_id")
     private String userId;
     @Column("cart_id")
-    private String cartId= UUID.randomUUID().toString();
+    private String cartId = UUID.randomUUID().toString();
     @Column("order_ids")
     private List<String> orderIds;
 
