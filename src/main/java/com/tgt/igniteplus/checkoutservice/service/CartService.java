@@ -1,6 +1,7 @@
 package com.tgt.igniteplus.checkoutservice.service;
 
 import com.tgt.igniteplus.checkoutservice.dao.CartDAO;
+import com.tgt.igniteplus.checkoutservice.exception.CartNotFoundException;
 import com.tgt.igniteplus.checkoutservice.model.Cart;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,32 +22,29 @@ public class CartService {
         return cartDAO.findAll();
     }
 
-    public Cart getByUserId(String userId){
-        Optional<Cart> cart = cartDAO.findById(userId);
-        Cart rowCart=cart.get();
-        if(!cart.isPresent()) {
-            return null;
+    public Cart getByUserId(String userId) throws CartNotFoundException {
+        Cart cart = cartDAO.findById(userId).get();
+        if(cart==null) {
+            throw new CartNotFoundException("Cart not found for the user");
         }
-        return rowCart;
+        return cart;
     }
 
-    public String createCartId(String userId){
+    public String createCartId(String userId) throws CartNotFoundException {
         Cart cart = new Cart();
-        cart.setUserId(userId);
         Boolean hasCart = hasCart(userId);
         if(!hasCart) {
             cart = createCart(cart);
             return cart.getCartId();
         }
-        cart.setUserId(userId);
-        cart.setCartId(getCartIdByUserId(userId));
-        cart.setOrderIds(getOrderIdsByUserId(userId));
-        return cart.getCartId();
+        return getCartIdByUserId(userId);
     }
+
 
     public Cart createCart(Cart cart){
         return cartDAO.save(cart);
     }
+
 
     public Boolean hasCart(String userId){
         Optional<Cart> cart=cartDAO.findById(userId);
@@ -56,33 +54,33 @@ public class CartService {
         return true;
     }
 
-    public String getCartIdByUserId(String userId) {
+
+    public String getCartIdByUserId(String userId) throws CartNotFoundException {
         Cart cart=getByUserId(userId);
         if(cart==null)
-            return null;
+            throw new CartNotFoundException("Cart not found for the user");
         return cart.getCartId();
     }
 
-    public List<String> getOrderIdsByUserId(String userId) {
+
+    public List<String> getOrderIdsByUserId(String userId) throws CartNotFoundException {
         Cart cart=getByUserId(userId);
         if(cart==null)
-            return null;
+            throw new CartNotFoundException("Cart not found for the user");
         return cart.getOrderIds();
     }
 
-    public String updateOrderIdByUserId(String userId,String orderId){
-        Optional<Cart> cart=cartDAO.findById(userId);
-        if(!cart.isPresent()) {
-            return "UserId does not exist.";
+    public String updateOrderIdByUserId(String userId,String orderId) throws CartNotFoundException {
+        Cart cart=cartDAO.findById(userId).get();
+        if(cart==null) {
+            throw new CartNotFoundException("Cart not found for the user");
         }
-        Cart cart1;
-        cart1=cart.get();
-        List<String> orderIds=cart1.getOrderIds();
+        List<String> orderIds=cart.getOrderIds();
         if(orderIds==null)
             orderIds=new ArrayList<String>();
         orderIds.add(orderId);
-        cart1.setOrderIds(orderIds);
-        cartDAO.save(cart1);
+        cart.setOrderIds(orderIds);
+        cartDAO.save(cart);
         return "OrderId:"+orderId+"added to user"+userId;
     }
 }
